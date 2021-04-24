@@ -1,0 +1,92 @@
+import pandas as pd
+import datetime as dt
+import plotly.graph_objects as go
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from .models import CO2
+
+class CO2_Logic:
+	def __init__(self):
+		co2db = CO2.objects.all()
+
+		co2data = pd.DataFrame.from_records([s.to_dict() for s in co2db])
+
+		grp1 = co2data.groupby(["Year"]).mean()["co2_ppm"]
+
+		self.index_list = grp1.index.tolist()
+		self.values_list = grp1.values.tolist()
+
+	def getindex(self):
+		return self.index_list
+
+	def getvalues(self):
+		return self.values_list
+
+		'''trace1 = go.Bar(x=grp1.index, y=grp1.values)
+
+		layout = go.Layout(
+		    title="Average CO<sub>2</sub> Levels in Atmosphere per month",
+		    yaxis=dict(title="Parts per million (PPM)", range=(300,420)),
+		    xaxis=dict(title="Year"))
+		figure = go.Figure(data=[trace1], layout=layout)
+
+		figure.show()'''
+
+
+
+'''grp2 = co2data.groupby(["Year", "Month"]).mean()["Carbon Dioxide (ppm)"]
+
+x = [dt.datetime(year=i[0], month=i[1], day=15) for i in grp2.index]
+
+# Mean values.
+y1 = grp2.values
+
+
+
+trace2 = go.Scatter(x=x, y=y1, mode="markers", name="Actual value")
+
+default_period = (dt.datetime(1958, 1, 1), dt.datetime(2008,12,1))
+default_ppm_range = (310, 410)
+
+
+x_learn = [ (i.month, i.year, i.month ** 2, i.year ** 2, i.month ** 3, i.year ** 3) for i in x]
+y_learn = [ i for i in y1 ]
+
+x_train, x_test, y_train, y_test = train_test_split(x_learn, y_learn)
+clf = LinearRegression().fit(x_train, y_train)
+print ("Accuracy: ", clf.score(x_test, y_test))
+
+
+# predicted values
+y4 = clf.predict(x_learn)
+
+# Select some future "years"
+pred_years = range(1950, 2030)
+pred_months = range(1, 13)
+
+# Prepare dataset
+x_pred = []
+for y in pred_years:
+    for m in pred_months:
+        x_pred.append([m, y, m ** 2, y ** 2,m **3, y ** 3])
+        
+# Predict values
+y_pred = clf.predict(x_pred)
+
+# plot the predicted values
+x_plt = [dt.datetime(i[1], i[0], 15) for i in x_pred]
+# trace5 = go.Scatter(x=x_plt, y=y_pred, line=dict(color="red"), name="Predicted value")
+
+# default_period = dt.datetime(1956, 1, 1), dt.datetime(2030,12,1)
+# default_ppm_range = (300, 450)
+# layout = go.Layout(
+#     title="Predicted Vs. Actual CO<sub>2</sub> Concentration levels",
+#     yaxis=dict(title="Parts per million (PPM)", range=default_ppm_range),
+#     xaxis=dict(title="Year", range=default_period))
+# figure = go.Figure(data=[trace2, trace5], layout=layout)
+
+# figure.show()
+x_userinputY = int(input("Enter Year: "))
+x_userinputM = int(input("Enter Month: "))
+x_userinput = [[x_userinputM, x_userinputY, x_userinputM**2, x_userinputY**2, x_userinputM**3, x_userinputY**3]]
+print(clf.predict(x_userinput))'''

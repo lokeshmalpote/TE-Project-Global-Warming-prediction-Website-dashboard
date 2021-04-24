@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		 <meta charset="UTF-8">
+		 <title>Global Warming Analysis Dashboard</title>
+		 <link rel="shortcut icon" type="image/png" href="{% static 'img/earth.ico' %}"/>
+		 <link rel="stylesheet" type="text/css" href="{% static 'css/fullpage.css' %}" />
+		 <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+		 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+		 <script src="{% static 'js/plotly-latest.min.js' %}"></script>
+		 <script src="{% static 'js/fullpage.js' %}"></script>
+		 <style>
+		 	body{
+		 		background-color: white;
+		 	}
+		 	h1{
+		 		text-align: center;
+		 		z-index: 1;
+		 		width: 99%;
+		 		color: blue;
+		 		font-size: 50px;
+		 		margin-top: -25px;
+		 		margin-bottom: -130px;
+		 	}
+		 	div{
+		 		margin-top: 15px;
+		 		text-align: center;
+		 	}
+		 	#co2{
+		 		background-color: slateblue;
+		 		color: cyan;
+		 		margin: 0 auto;
+		 		font-size: 24px;
+		 		width: 67%;
+		 		padding: 5px 10px;
+		 		border: 3px solid magenta;
+		 		border-radius: 8px;
+		 		font-family: 'sans';
+		 	}
+		 	#temp{
+		 		background-color: slateblue;
+		 		color: cyan;
+		 		margin: 0 auto;
+		 		font-size: 24px;
+		 		width: 75%;
+		 		padding: 5px 10px;
+		 		border: 3px solid magenta;
+		 		border-radius: 8px;
+		 		font-family: 'sans';
+		 	}
+		 	.countdown{
+		 		margin: 20px auto;
+		 		width: 85%;
+		 	}
+		 	#accuracies{
+		 		margin: 0 auto;
+		 		width: 50%;
+		 	}
+		 	button{
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: -20px 40px;
+		 		border: 5px solid #00ffff88;
+		 		border-radius: 12px;
+		 		color: white;
+		 		background-color: #00ffff44;
+		 	}
+		 	button:hover{
+		 		color: purple;
+                border: 5px solid cyan;
+                background-color: #00ffff88;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(0,255,255,0.7), 0 17px 50px 0 rgba(0,255,255,0.19);
+		 	}
+		 	u{
+		 		color: red;
+		 	}
+		 </style>
+	</head>
+	<body>
+		<div id="fullpage">
+				
+			<div class="section">
+				<h1>Global Warming Analysis Dashboard</h1>
+				<div class="slide">
+					<div id="accuracies"></div>
+				</div>
+				<div class="slide">
+					<div id="co2">
+						<p><b>CO<sub>2</sub> will reach a concentration of 450ppm around ' <u>{{co2_value_month}} / {{co2_value_year}}</u> '</b></p>
+					</div>
+					<div class="countdown" id="countdown_co2"></div>
+				</div>
+				<div class="slide">
+					<div id="temp">
+						<p><b>With Current Temperature increase rate, it is likely to increase more than 1.5° since 1850 value around ' <u>{{temp_value}}</u> '</b></p>
+					</div>
+					<div class="countdown" id="countdown_temp"></div>
+				</div>
+				<button onclick="location.href='/';"><i class="material-icons">arrow_back</i> GO BACK</button>
+			</div>
+		</div>	
+		
+		<script>
+			$(document).ready(function() {
+				$('#fullpage').fullpage({
+					 loopHorizontal: false,
+				});
+			});
+			var co2_accuracy = {{co2_accuracy}};
+			var temp_accuracy = {{temp_accuracy}};
+			var d = new Date();
+			var n = d.getFullYear();
+			var trace1 = {
+			  x: [n],
+			  y: ['Year'],
+			  name: 'Years Elapsed',
+			  orientation: 'h',
+			  marker: {
+			    color: 'rgba(55,128,191,0.6)',
+			    width: 1
+			  },
+			  type: 'bar'
+			};
+
+			var trace2 = {
+			  x: [{{co2_value_year}}-n],
+			  y: ['Year'],
+			  name: 'Years Remaining',
+			  orientation: 'h',
+			  type: 'bar',
+			  marker: {
+			    color: 'rgba(255,153,51,0.6)',
+			    width: 1
+			  }
+			};
+			var data = [trace1, trace2];
+
+			var layout = {
+			  title: {text: 'Years Before CO<sub>2</sub> will reach concentration of 450ppm', font: {"size": 24}},
+			  barmode: 'stack',
+			  xaxis: {range: [1960, 2050]},
+			};
+			Plotly.newPlot('countdown_co2', data, layout);
+			//////
+			var trace3 = {
+			  x: [n],
+			  y: ['Year'],
+			  name: 'Years Elapsed',
+			  orientation: 'h',
+			  marker: {
+			    color: 'rgba(55,128,191,0.6)',
+			    width: 1
+			  },
+			  type: 'bar'
+			};
+
+			var trace4 = {
+			  x: [{{temp_value}}-n],
+			  y: ['Year'],
+			  name: 'Years Remaining',
+			  orientation: 'h',
+			  type: 'bar',
+			  marker: {
+			    color: 'rgba(255,153,51,0.6)',
+			    width: 1
+			  }
+			};
+			var data2 = [trace3, trace4];
+
+			var layout2 = {
+			  title: {text: 'Years Before Temperature increases more than 1.5° since 1850' , font: {"size": 24}},
+			  barmode: 'stack',
+			  xaxis: {range: [1850, 2050]},
+			};
+			Plotly.newPlot('countdown_temp', data2, layout2);
+			//////
+			var data1 = [{
+				values: [co2_accuracy, 100-co2_accuracy],
+				labels: ['CO2 Accuracy'],
+				domain: {column: 0},
+				name: '',
+				//hoverinfo: 'label+percent+name',
+				hole: .4,
+				type: 'pie'
+				},
+				{
+				values: [temp_accuracy, 100-temp_accuracy],
+				labels: ['Temperature Accuracy'],
+				//text: 'CO2',
+				//textposition: 'inside',
+				domain: {column: 1},
+				name: '',
+				//hoverinfo: 'label+percent+name',
+				hole: .4,
+				type: 'pie'
+				}];
+			var layout1 = {
+				title: {text: 'Prediction Accuracies', font: {"size": 24}},
+				annotations: [
+				  {
+				    font: {
+				      size: 16
+				    },
+				    showarrow: false,
+				    text: 'CO2',
+				    x: 0.13,
+				    y: 0.5
+				  },
+				  {
+				    font: {
+				      size: 16
+				    },
+				    showarrow: false,
+				    text: 'Temperature',
+				    x: 0.5,
+				    y: 0.5
+				  }
+				],
+				height: 450,
+				width: 950,
+				showlegend: false,
+				grid: {rows: 1, columns: 3}
+				};
+			console.log({{co2_value_year}})
+    		console.log(co2_accuracy);
+    		console.log(temp_accuracy);
+			Plotly.newPlot('accuracies', data1, layout1);
+		</script>
+	</body>
+	
+</html>

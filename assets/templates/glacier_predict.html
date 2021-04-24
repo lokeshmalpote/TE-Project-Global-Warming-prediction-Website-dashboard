@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		 <meta charset="UTF-8">
+		 <title>Glacier Mass Prediction</title>
+		 <link rel="shortcut icon" type="image/png" href="{% static 'img/earth.ico' %}"/>
+		 <link rel="stylesheet" href="{% static 'css/form.css' %}">
+		 <style>
+		 	@font-face {
+				font-family: 'Material Icons';
+				font-style: normal;
+				font-weight: 400;
+				src: url({% static 'woff2/icons.woff2' %}) format('woff2');
+			}
+
+			.material-icons {
+				font-family: 'Material Icons';
+				font-weight: normal;
+				font-style: normal;
+				font-size: 24px;
+				line-height: 1;
+				letter-spacing: normal;
+				text-transform: none;
+				display: inline-block;
+				white-space: nowrap;
+				word-wrap: normal;
+				direction: ltr;
+				-moz-font-feature-settings: 'liga';
+				-moz-osx-font-smoothing: grayscale;
+			}
+		 	body{
+		 		background-color: lightblue;
+		 	}
+		 	#main{
+		 		text-align: center;
+		 		width: 400px;
+		 		margin: 130px auto;
+		 		padding-left: 20px;
+		 		border: 4px solid blue;
+		 		border-radius: 14px;
+		 	}
+		 	#res{
+		 		font-size: 20px;
+		 		width: 400px;
+		 		margin: 30px auto;
+		 		text-align: center;
+		 		border: 4px solid transparent;
+		 		border-radius: 14px;
+		 		padding: 10px 0px;
+		 	}
+		 	button{
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 20px 28px;
+		 		border: 5px solid #ff000088;
+		 		border-radius: 12px;
+		 		color: purple;
+		 		background-color: #ff000044;
+		 	}
+		 	input{
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 15px 30px;
+		 		border: 5px solid #ff000088;
+		 		border-radius: 12px;
+		 		color: white;
+		 		background-color: #ff000044;
+		 	}
+		 	button:hover{
+		 		color: green;
+		 		border: 5px solid red;
+                background-color: #ff000088;
+                text-shadow: 0px 0px 4px white;
+                box-shadow: 2px 2px 16px 4px rgba(255,0,0,0.7), 0 17px 50px 0 rgba(255,0,0,0.19);
+		 	}
+		 	input:hover{
+		 		color: white;
+                border: 5px solid red;
+                background-color: #ff000088;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(255,0,0,0.7), 0 17px 50px 0 rgba(255,0,0,0.19);
+		 	}
+		 </style>
+	</head>
+	<body>
+		<main>
+			<form class="flp" action="/glacier_predict/" method="POST">
+				{% csrf_token %}
+				<div>
+					<input type="number" min="1" max="2100" id="year" name="year" required />
+					<label for="year">Year</label>
+				</div>
+				<button type="submit"><i class="material-icons">done</i> SUBMIT</button>
+				<button onclick="location.href='/mainpage/#ice';"><i class="material-icons">arrow_back</i> GO BACK</button>
+			</form>
+		</main>
+		<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+		<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+		<script>
+			$(".flp label").each(function(){
+				var sop = '<span class="ch">'; 
+				var scl = '</span>'; 
+			 
+				$(this).html(sop + $(this).html().split("").join(scl+sop) + scl);
+			 
+				$(".ch:contains(' ')").html("&nbsp;");
+			})
+			 
+			var d;
+			 
+			$(".flp input").focus(function(){
+			 
+				var tm = $(this).outerHeight()/2 *-1 + "px";
+			 
+				$(this).next().addClass("focussed").children().stop(true).each(function(i){
+					d = i*50;
+					$(this).delay(d).animate({top: tm}, 200, 'easeOutBack');
+				})
+			})
+			$(".flp input").blur(function(){
+				if($(this).val() == "")
+				{
+					$(this).next().removeClass("focussed").children().stop(true).each(function(i){
+					d = i*50;
+					$(this).delay(d).animate({top: 0}, 500, 'easeInOutBack');
+					})
+				}
+			})
+		</script>
+		<div id="res">
+			{{ result|safe }}
+		</div>
+		<script type="text/javascript">
+			var check = '{{result|safe}}'
+			if(check!=''){
+				document.getElementById("res").style.borderColor = "orange"; 
+			}
+		</script>
+	</body>
+	
+</html>

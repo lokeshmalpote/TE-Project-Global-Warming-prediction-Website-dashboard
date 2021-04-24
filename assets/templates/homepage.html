@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> Global Warming..</title>
+		<link rel="shortcut icon" type="image/png" href="{% static 'img/v26' %}"/>
+		<script src="/static/js/anime.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+		<style type="text/css">
+			body{
+				background-image: url("{% static 'img/v26.jpg' %}");
+				background-size: cover;
+			}
+			div{
+				text-align: center;
+			}
+			h1{
+				font-size: 60px;
+				color: #00bfff;
+				font-weight: bold;
+		 		text-shadow: 3px 3px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+			h2{
+				font-size: 50px;
+				color: orange;
+		 		text-shadow: 3px 3px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+			h3{
+				font-size: 34px;
+				color: magenta;
+				font-weight: bold;
+				text-shadow: 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+			h4{
+				font-size: 24px;
+				color: gold;
+				font-weight: bold;
+				font-family: "Sans-serif";
+				text-shadow: 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+			button{
+				padding: 15px 20px;
+		 		font-size: 30px;
+		 		margin: 30px 100px;
+		 		border: 5px solid #00ffff88;
+		 		border-radius: 12px;
+		 		font-weight: bold;
+		 		color: red;
+		 		text-shadow: 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		 		background-color: #ff00ff44;
+			}
+			button:hover{
+				padding: 15px 20px;
+		 		font-size: 30px;
+		 		margin: 30px 100px;
+		 		border: 5px solid #00ffffff;
+		 		border-radius: 12px;
+		 		font-weight: bold;
+		 		color: red;
+		 		text-shadow: 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		 		background-color: #ff00ff88;
+		 		box-shadow: 2px 2px 16px 4px rgba(0,255,255,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+			}
+			#mid{
+				width: 100%;
+				display: inline;
+			}
+			#names{
+				border: 5px double white;
+				border-radius: 12px;
+				width: 552px;
+				height: 350px;
+				display: inline-block;
+				margin: 20px 40px;
+				float: left;
+			}
+			#info{
+				text-align: left;
+				padding-left: 15px;
+				float: right;
+				margin: 20px 40px;
+				width: 552px;
+				height: 350px;
+				border: 5px double white;
+				border-radius: 12px;
+				display: inline-block;
+			}
+			.ml9 .letter {
+				transform-origin: 50% 100%;
+				display: inline-block;
+			}
+			li {
+				font-size: 18px;
+				font-weight: bold;
+				color: cyan;
+				font-family: "Sans-serif";
+				text-shadow: 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<h1 class="ml9">
+    				<span class="letters">Global Warming..</span>
+			</h1>
+			<h2 class="ml1">
+    				<span class="letters">"Excessive heat will burn us.."</span>
+			</h2>
+		</div>
+		<div id="mid">
+			<div id="names">
+				<h3><i>A Project by:</i></h3>
+				<h4>Lokesh Malpote</h4>
+				<h4>Vidya Shinde</h4>
+			</div>
+			<div id="info">
+				<h3>In this project, we've covered :</h3>
+				<h4>Analysis and prediction of -</h4>
+				<ul style="list-style-type:none;">
+					<li>&#9658 CO<sub>2</sub> concentrations in atmosphere</li>
+					<li>&#9658 Global Temperature Change	</li>
+					<li>&#9658 Rate of melting of Glaciers</li>
+				</ul>
+				<h4>Interrelation among these factors and how they affect the life on Earth</h4>
+			</div>
+		</div>
+		<div id="buttons">
+			<button  onclick="location.href='dashboard/';"><i class="material-icons">dashboard</i> DASHBOARD</button>
+			<button onclick="location.href='mainpage/';"><i class="material-icons">stars</i> MAIN PAGE</button>
+		</div>
+		<script type="text/javascript">
+			var textWrapper1 = document.querySelector('.ml1 .letters');
+			textWrapper1.innerHTML = textWrapper1.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+			anime.timeline({loop: true})
+			  .add({
+			    targets: '.ml1 .letter',
+			    scale: [0.3,1],
+			    opacity: [0,1],
+			    translateZ: 0,
+			    easing: "easeOutExpo",
+			    duration: 600,
+			    delay: (el, i) => 70 * (i+1)
+			  }).add({
+			    targets: '.ml1',
+			    opacity: 0,
+			    duration: 1000,
+			    easing: "easeOutExpo",
+			    delay: 1000
+			  });
+
+			var textWrapper2 = document.querySelector('.ml9 .letters');
+			textWrapper2.innerHTML = textWrapper2.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+			anime.timeline({loop: false})
+			  .add({
+			    targets: '.ml9 .letter',
+			    scale: [0, 1],
+			    duration: 1500,
+			    elasticity: 600,
+			    delay: (el, i) => 45 * (i+1)
+			  });
+		</script>
+	</body>

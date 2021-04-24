@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Environmental Analysis</title>
+		<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+		<script src="{% static 'js/fullpage.js' %}"></script>
+		
+		<link rel="shortcut icon" type="image/png" href="{% static 'img/earth.ico' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/fullpage.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+		<style>
+		 	h1{
+		 		position: absolute;
+		 		margin-top:-320px;
+	            color: yellow;
+		 		width: 100%;
+		 		text-align: center;
+		 		font-size: 50px;
+		 		font-weight: bold;
+		 		text-shadow: 3px 3px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		 	}
+		 	.buttonclass1 {
+		 		text-align: center;
+		 		position: absolute;
+		 		width: 100%;
+		 		margin-top: 250px;
+		 		
+		 	}
+		 	.buttonclass2 {
+		 		text-align: center;
+		 		position: absolute;
+		 		width: 100%;
+		 		margin-top: 250px;
+		 	}
+		 	.buttonclass3 {
+		 		text-align: center;
+		 		position: absolute;
+		 		width: 100%;
+		 		margin-top: 250px;
+		 	}
+		 	.home {
+		 		position: absolute;
+		 		padding: 10px 10px;
+		        font-size: 20px;
+		 		margin: -1000px 20px;
+		 		border: 5px solid #000000cc;
+		 		border-radius: 25px;
+		 		color: white;
+		 		background-color: #00000044;
+		 		text-shadow: 0px 0px 4px white;
+		 	}
+		 	.add {
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 15px;
+		 		border: 5px solid #00ffff88;
+		 		border-radius: 25px;
+		 		color: darkblue;
+		 		background-color: #00ffff44;
+		 		text-shadow: 0px 0px 4px white;
+		 	}
+		 	.view {
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 15px;
+		 		border: 5px solid #00ff0088;
+		 		border-radius: 25px;
+		 		color: #013220;
+		 		background-color: #00ff0044;
+		 		text-shadow: 0px 0px 4px white;
+		 	}
+		 	.delete {
+				padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 15px;
+		 		border: 5px solid #ff0000cc;
+		 		border-radius: 25px;
+		 		color: red;
+		 		background-color: #ff000044;
+		 		text-shadow: 0px 0px 4px slateblue; 
+		 		
+		 	}
+		 	.pred {
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 15px;
+		 		border: 5px solid #ff670088;
+		 		border-radius: 25px;
+		 		color: #ff2200;
+		 		background-color: #ff670044;
+		 		text-shadow: 0px 0px 4px white;
+		 	}
+		 	.comp {
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 15px;
+		 		border: 5px solid #80008088;
+		 		border-radius: 25px;
+		 		color: purple;
+		 		background-color: #80008044;
+		 		text-shadow: 0px 0px 4px white;
+		 	}
+		 	#page1 {
+		 		background-image: url("{% static 'img/v26.jpg' %}");
+		 		background-size: cover;
+				hight:2000px;
+		 	}
+		 	#page2 {
+		 		background-image: url("{% static 'img/v3.jpg' %}");
+		 		background-size: cover;
+				hight:2000px;
+		 	}
+		 	
+		 	}
+		 	.home:hover {
+                color: pink;
+                border: 5px solid black;
+                background-color: #000000aa;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(0,0,0,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+		 	.add:hover {
+                color: 	orange;
+                border: 5px solid red;
+                background-color: #ff0000aa;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(255,0,0,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+            .view:hover {
+                color: #880000;
+                border: 5px solid #00ff00;
+                background-color: #00ff00aa;
+                text-shadow: 0px 0px 4px white;
+                box-shadow: 2px 2px 16px 4px rgba(0,255,0,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+            .delete:hover {
+            	color: black;
+                border: 5px solid #00ffff;
+                background-color: #00ffffaa;
+                text-shadow: 0px 0px 4px white;
+                box-shadow: 2px 2px 16px 4px rgba(0,0,255,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+            .pred:hover {
+                color: blue;
+                border: 5px solid orange;
+                background-color: #ff6700aa;
+                text-shadow: 0px 0px 4px white;
+                box-shadow: 2px 2px 16px 4px rgba(255,128,0,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+            .comp:hover {
+                color: yellow;
+                border: 5px solid purple;
+                background-color: #800080aa;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(128,0,128,0.7), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+		 </style>
+	</head>
+	<body>
+		<div id="fullpage">
+			<div class="section"mx=0 id="page1" data-anchor="co2">
+				<h1>CO<sub>2</sub> Concentrations in PPM</h1>
+				<button class="home" onclick="location.href='/';"><i class="material-icons">home</i> HOME</button>
+				<div class="buttonclass1">
+					<button class="add" onclick="location.href='/co2_add_dataset';"><i class="material-icons">file_upload</i> ADD DATASET</button>
+					<button class="delete" onclick="clearCO2();"><i class="material-icons">delete</i> CLEAR DATASET</button>
+					<button class="view" onclick="location.href='/co2_view';"><i class="material-icons">timeline</i> ANALYSIS GRAPH</button>
+					<button class="comp" onclick="location.href='/co2_table';"><i class="material-icons">border_all</i> VALUE COMPARISON</button>
+					<button class="pred" onclick="location.href='/co2_predict';"><i class="material-icons">flare</i> PREDICT VALUE</button>
+				</div>			
+			</div>
+			<div class="section" id="page2" data-anchor="temp">
+				<h1>Global Temperature</h1>
+				<button class="home" onclick="location.href='/';"><i class="material-icons">home</i> HOME</button>
+				<div class="buttonclass2">
+					<button class="add" onclick="location.href='/temp_add_dataset';"><i class="material-icons">file_upload</i> ADD DATASET</button>
+					<button  class="delete" onclick="clearTemperature();"><i class="material-icons">delete</i> CLEAR DATASET</button>
+					<button class="view" onclick="location.href='/temp_view';"><i class="material-icons">timeline</i> ANALYSIS GRAPH</button>
+					<button class="comp" onclick="location.href='/temp_table';"><i class="material-icons">border_all</i> VALUE COMPARISON</button>
+					<button class="pred" onclick="location.href='/temp_predict';"><i class="material-icons">flare</i> PREDICT VALUE</button>
+				</div>
+			</div>
+			
+		</div>
+		<script>
+			$(document).ready(function() {
+				$('#fullpage').fullpage({
+					navigation: true,
+					navigationPosition: 'right',
+				});
+			});
+			function clearCO2() {
+				if (confirm("Clearing Dataset will PERMANENTLY REMOVE existing data!")) {
+					location.href='/co2_truncate';
+				}
+			}
+			function clearTemperature() {
+				if (confirm("Clearing Dataset will PERMANENTLY REMOVE existing data!")) {
+					location.href='/temp_truncate';
+				}
+			}
+			function clearGlacier() {
+				if (confirm("Clearing Dataset will PERMANENTLY REMOVE existing data!")) {
+					location.href='/glacier_truncate';
+				}
+			}
+		</script>
+	</body>
+	
+</html>

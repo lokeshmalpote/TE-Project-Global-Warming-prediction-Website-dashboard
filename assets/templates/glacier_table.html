@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>COMPARISON TABLES</title>
+	<link rel="shortcut icon" type="image/png" href="{% static 'img/earth.ico' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+	<style type="text/css">
+        body{
+            background-color: lightblue;
+        }
+		div{
+            width: 99%;
+            text-align: center;
+            }
+        button{
+            padding: 10px 10px;
+            font-size: 20px;
+            margin: 0px 40px;
+            border: 5px solid #80008088;
+            border-radius: 12px;
+            color: purple;
+            background-color: #80008044;
+        }
+        button:hover{
+            color: yellow;
+            border: 5px solid purple;
+            background-color: #80008088;
+            text-shadow: 0px 0px 4px black;
+            box-shadow: 2px 2px 16px 4px rgba(128,0,128,0.7), 0 17px 50px 0 rgba(0,255,255,0.19);
+        }
+	</style>
+</head>
+<body>
+    <!--THE CONTAINER WHERE WE'll ADD THE DYNAMIC TABLE-->
+    <div id="tablepos"></div>
+    <div>
+        <button onclick="location.href='/mainpage/#ice';"><i class="material-icons">arrow_back</i> GO BACK</button>
+     </div>  
+</body>
+
+<script>
+    // ARRAY FOR HEADER.
+    var arrHead = new Array();
+    arrHead = ['Year', 'Original Mean Mass Balance', 'Predicted Mean Mass Balance'];
+    // SIMPLY ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
+
+    // FIRST CREATE A TABLE STRUCTURE BY ADDING A FEW HEADERS AND
+    // ADD THE TABLE TO YOUR WEB PAGE.
+
+        var myTable = document.createElement('table');
+        myTable.setAttribute('id', 'Table');            // SET THE TABLE ID.
+        myTable.setAttribute('border', '1');
+        myTable.setAttribute('class', 'striped');
+
+        var tr = myTable.insertRow(-1);
+
+        var div = document.getElementById('tablepos');
+        div.appendChild(myTable);    // ADD THE TABLE TO YOUR WEB PAGE.
+
+        var empTab = document.getElementById('Table');
+        var years = {{years}}
+        var orig_bal = {{orig_bal}}
+        var pred_bal = {{pred_bal}}
+
+        for(var i=0; i<years.length; i++)
+        {
+        	if(i==0)
+        	{
+        		for (var h=0; h<arrHead.length; h++)
+        		{
+            		var th = document.createElement('th');          // TABLE HEADER.
+            		th.innerHTML = arrHead[h];
+            		tr.appendChild(th);
+        		}
+        	}
+        	else
+        	{
+	        	// Create an empty <tr> element and add it to the 1st position of the table:
+				var row = empTab.insertRow(i);
+				// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+
+				// Add some text to the new cells:
+				cell1.innerHTML = years[i];
+				cell2.innerHTML = orig_bal[i];
+				cell3.innerHTML = pred_bal[i];
+			}
+		}
+</script>
+</html>

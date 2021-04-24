@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Global Temperature Analysis Graph</title>
+		<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+		<script src="{% static 'js/fullpage.js' %}"></script>
+		<link rel="shortcut icon" type="image/png" href="{% static 'img/earth.ico' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+		<script src="{% static 'js/plotly-latest.min.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/fullpage.css' %}" />
+		<style>
+		 	body{
+		 		background-color: slateblue;
+		 	}
+		 	div{
+		 		margin: -20px auto;
+		 		width: 95%;
+		 		text-align: center;
+		 	}
+		 	button{
+		 		padding: 10px 10px;
+		 		font-size: 20px;
+		 		margin: 0px 40px;
+		 		border: 5px solid #00ffff88;
+		 		border-radius: 12px;
+		 		color: white;
+		 		background-color: #00ffff44;
+		 	}
+		 	button:hover{
+		 		color: purple;
+                border: 5px solid cyan;
+                background-color: #00ffff88;
+                text-shadow: 0px 0px 4px black;
+                box-shadow: 2px 2px 16px 4px rgba(0,255,255,0.7), 0 17px 50px 0 rgba(0,255,255,0.19);
+		 	}
+		 </style>
+	</head>
+	<body>
+		<div id="fullpage">
+			<div class="section">
+				<div class="slide">
+					<div id="temp_graph_data"></div>
+				</div>
+				<div class="slide">
+					<div id="temp_graph_pred"></div>
+				</div>
+				<div>
+					<button onclick="location.href='/mainpage/#temp';"><i class="material-icons">arrow_back</i> GO BACK</button>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function() {
+				$('#fullpage').fullpage({
+				});
+			});
+			var x_val = {{graph1_X}};
+			var y_val = {{graph1_Y}};
+			var x_graph2_val1 = JSON.parse("{{graph2_X1|escapejs}}");
+			var y_graph2_val1 = {{graph2_Y1}};
+			var x_graph2_val2 = JSON.parse("{{graph2_X2|escapejs}}");
+			var y_graph2_val2 = {{graph2_Y2}};
+			var graph1_data = [{
+		  		x: x_val,
+		  		y: y_val,
+		  		type: 'bar',
+			}];
+			var graph2_data1 = {
+				x: x_graph2_val1,
+				y: y_graph2_val1,
+				type: 'scatter',
+				name: "Actual Value",
+			};
+			var graph2_data2 = {
+				x: x_graph2_val2,
+				y: y_graph2_val2,
+				type: 'scatter',
+				name: "Predicted Value",
+			};
+
+			var graph1_layout = {
+    			title: {text: "Average Global Temperatures", font: {size: 24}},
+    			yaxis: {title: "Temperature in Degree Celsius"},
+    			xaxis: {title: "Year", range: [1845, 2020]},
+    			plot_bgcolor: '#c7c7c7',
+    		};
+    		var graph2_layout = {
+    			title: {text: "Predicted Vs. Actual Global Temperatures", font: {size: 24}},
+    			yaxis: {title: "Temperature in Degree Celsius"},
+    			xaxis: {title: "Year", range: ["1845-01-15T00:00:00", "2050-12-15T00:00:00"]},
+  				plot_bgcolor: '#c7c7c7',
+    		};
+    		console.log(x_val);
+    		console.log(y_val);
+    		console.log(x_graph2_val1);
+    		console.log(y_graph2_val1);
+    		console.log(x_graph2_val2);
+    		console.log(y_graph2_val2);
+			Plotly.newPlot('temp_graph_data', graph1_data, graph1_layout);
+			Plotly.newPlot('temp_graph_pred', [graph2_data1, graph2_data2], graph2_layout);
+		</script>
+	</body>
+	
+</html>
